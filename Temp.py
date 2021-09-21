@@ -1,5 +1,6 @@
 import threading
-import Room as rr
+import Device as dvc
+import grovepi as gpi
 
 temperature = 0
 
@@ -9,16 +10,12 @@ def set_temp(x):
 def get_temp():
     return temperature
 
-
-class Temperature(threading.Thread):
-    _Room = rr.Room(0,0,0)
-    def __init__(self, threadID, name, Room):
-        threading.Thread.__init__(self)
-        self.threadID = threadID
-        self.name = name
-        self._Room = Room
+class Temperature():
+    _Device = dvc.Device(0,"NaN",0,"OFF")
+    def __init__(self, device):
+        self._Device = device
     def run(self):
-        [temp, hum] = gpi.dht(tempmoler, 0)
+        [temp, hum] = gpi.dht(self._Device.get_ConnectorPin(), 0)
         if self.room._ID == 1:
             if temp > 23:
                 set_temp(temp)

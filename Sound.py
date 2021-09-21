@@ -1,6 +1,6 @@
 import threading
-import Room as rr
 import Device as dvc
+import grovepi as gpi
 
 sound = 0
 
@@ -10,20 +10,14 @@ def set_sound(x):
 def get_sound():
     return sound
 
-class SoundCheck(threading.Thread):
-    _Room = rr.Room(0,0,0)
+class SoundCheck():
     _Device = dvc.Device(0,"NaN",0,"OFF")
-    def __init__(self, threadID, name, room, device):
-        threading.Thread.__init__(self)
-        self.threadID = threadID
-        self.name = name
-        self._Room = room
+    def __init__(self, device):
         self._Device = device
     def run(self):
         while True:
-            sound_level = gpi.analogRead(_Device.get_ConnectorPin())
+            sound_level = gpi.analogRead(self._Device.get_ConnectorPin())
             if sound_level > 600:
-                #Throw warning sound level too high
-                set_sound(sound_level)
+                return "WARNING SOUND"
             else:
                 set_sound(sound_level)

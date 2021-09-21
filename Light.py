@@ -1,4 +1,5 @@
 import Device as dvc
+import grovepi as gpi
 
 lys = 0
 
@@ -13,12 +14,11 @@ class Light():
     def __init__(self, device):
         self_Device = device
     def run(self):
-        set_lys(gpi.analogRead(_Device.get_ConnectorPin()))
+        set_lys(gpi.analogRead(self._Device.get_ConnectorPin()))
         if get_lys() > 10:
-            print("Masser af lys")
-            #Masser af lys
+            return ("TÆNDT")
         if get_lys() < 10:
-            TaandLys()
+            return ("SLUKKET")
 
 def TaandLys():
     print("Tænder lyset")
